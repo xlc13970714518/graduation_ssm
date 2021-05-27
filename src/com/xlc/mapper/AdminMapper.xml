@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.xlc.mapper.AdminMapper">
+ <select id="selByNamePswd" resultType="admin" >
+ select * from t_admin where name=#{0} and password=#{1}
+ </select>
+ <update id="updateByName">
+ update t_admin set password=#{2} where name=#{0} and password=#{1}
+ </update>
+ <select id="selAllDept" resultType="com.xlc.pojo.Dept">
+ select * from t_dept 
+ </select>
+ <select id="selDeptPageQuery" resultType="com.xlc.pojo.Dept">
+ select * from t_dept limit #{0}, #{1}
+ </select>
+ <insert id="insertDept" parameterType="com.xlc.pojo.Dept">
+ insert into t_dept (dept_id,dept_name) values(#{dept_id},#{dept_name})
+ </insert>
+ <delete id="deleteDeptByDept_id">
+ delete from t_dept where dept_id=#{0}
+ </delete>
+ <select id="selMajorByDept_id" resultType="com.xlc.pojo.Major">
+ select * from t_major where dept_id=#{0}
+ </select>
+ <select id="selMajorPageQueryByDept_id" resultType="com.xlc.pojo.Major">
+ select * from t_major where dept_id=#{0} limit #{1},#{2}
+ </select>
+ <insert id="insertMajor" parameterType="com.xlc.pojo.Major">
+ insert into t_major (major_id,major_name,dept_name,dept_id) values (#{major_id},#{major_name},#{dept_name},#{dept_id})
+ </insert>
+ <delete id="deleteMajorByMajor_id">
+ delete from t_major where major_id=#{0}
+ </delete>
+ <select id="selMajorsBydept_name" resultType="com.xlc.pojo.Major">
+ select * from t_major where dept_name=#{0}
+ </select>
+  </mapper>

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  <mapper namespace="com.xlc.mapper.StudentMapper">
+ <select id="selByNamePswd" resultType="student" >
+ select * from t_student where name=#{0} and password=#{1}
+ </select>
+ <select id="selAll" resultType="student">
+ SELECT * FROM  t_student LIMIT #{0},#{1};
+ </select>
+ <select id="selAll1" resultType="student">
+ select * from t_student
+ </select>
+ <delete id="deleteByNumber">
+ DELETE FROM t_student WHERE number=#{0}
+ </delete>
+ <insert id="addStudent" parameterType="student">
+ insert into t_student(id,number,name,sex,major,dept,enyear,phonenumber,qq) 
+VALUES (default,#{number},#{name},#{sex},#{major},#{dept},#{enyear},#{phonenumber},#{qq})
+ </insert>
+ <update id="updateStudent" parameterType="student">
+ update t_student set name=#{name},sex=#{sex},major=#{major},enyear=#{enyear},phonenumber=#{phonenumber},qq=#{qq}
+ where number=#{number}
+ </update>
+ <select id="selByNumber" resultType="student">
+ select * from t_student where number=#{0}
+ </select>
+ <update id="updateBynumberPswd">
+ update t_student set password=#{2} where number=#{0} and password=#{1}
+ </update>
+ <select id="selByDept" resultType="java.lang.Integer">
+ select count(*) from t_papertitle where dept=#{0} 
+ </select>
+ <select id="selByDeptPageQuery" resultType="com.xlc.pojo.PaperTitle">
+ SELECT * FROM t_papertitle WHERE dept=#{0} LIMIT #{1},#{2}
+ </select>
+ <update id="updateStudentByNumber">
+ update t_student set options=#{1},papertitleid=#{2} where number=#{0}
+ </update>
+ <update id="updatePaperTitleByid">
+ update t_papertitle set choose_status=#{1} WHERE id=#{0}
+ </update>
+ <select id="selStudentById" resultType="java.lang.Integer">
+ select options from t_student where id=#{0}
+ </select>
+ <select id="selPapertitleById" resultType="com.xlc.pojo.PaperTitle">
+ SELECT * FROM t_papertitle WHERE id =(SELECT papertitleid FROM t_student WHERE id=#{0})
+ </select>
+ <select id="selStudentPapersByStuNum" resultType="com.xlc.pojo.StudentPaper">
+ SELECT * FROM t_studentpapers WHERE stuNum=#{0}
+ </select>
+ <insert id="insertStudentPapers" parameterType="com.xlc.pojo.StudentPaper">
+ insert into t_studentpapers(id,stuNum,paperPath,stuName,stuDept,stuMajor,teacherNum) 
+VALUES (default,#{stuNum},#{paperPath},#{stuName},#{stuDept},#{stuMajor},#{teacherNum})
+ </insert>
+ <update id="updateStudentPapers">
+ update t_studentpapers set paperPath=#{1},checkStatus=#{2},paperAdvices=#{3} where stuNum=#{0}
+ </update>
+ <select id="selStudentPaperTitlesByStudentNum" resultType="com.xlc.pojo.StudentPaperTitles">
+ select * from t_studentpapertitles where studentNumber=#{0}
+ </select>
+ 
+  </mapper>
+ 
